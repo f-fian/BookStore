@@ -7,6 +7,7 @@ import com.example.BooksStore.repo.BooksRepo;
 import com.example.BooksStore.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +38,19 @@ public class UserService {
         Book book = optionalBook.get();
         book.setUser(user);
         booksRepo.save(book);
+//        return booksRepo.findAllBookByUser(user);
+    }
+
+    public List<Book> findAllBookByUser(Long userId){
+        User user = userRepo.findById(userId).get();
+        List<Book> booksByUser = booksRepo.findAllBookByUser(user);
+        return booksByUser;
+    }
 
 
+    public void deleteUserBook(Long bookId){
+        Book book = booksRepo.findById(bookId).get();
+        book.setUser(null);
     }
 }
 

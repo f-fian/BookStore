@@ -1,6 +1,7 @@
 package com.example.BooksStore.service;
 
 import com.example.BooksStore.entity.Book;
+import com.example.BooksStore.entity.User;
 import com.example.BooksStore.repo.BooksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,12 @@ public class BooksService {
 
     public Book addBook(Book newBook){
         return booksRepo.save(newBook);
-
     }
+
+
+
+
+
+
 
 }

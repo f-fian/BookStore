@@ -2,6 +2,7 @@ package com.example.BooksStore.controller;
 
 
 import com.example.BooksStore.entity.Book;
+import com.example.BooksStore.entity.User;
 import com.example.BooksStore.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,4 +30,20 @@ public class BooksController {
     public Book addBook(@RequestBody Book book){
         return this.booksService.addBook(book);
     }
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,13 +1,11 @@
 package com.example.BooksStore.controller;
 
 import com.example.BooksStore.dto.UserBookDto;
+import com.example.BooksStore.entity.Book;
 import com.example.BooksStore.entity.User;
 import com.example.BooksStore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,10 +28,26 @@ public class UserController {
 
 
 
-    @PostMapping("user-book")
+    @PostMapping("user-book/add")
     public void addUserBook(@RequestBody UserBookDto userBook){
+        System.out.println("addUserBook");
         this.userService.addUserBook(userBook);
     }
+
+    @GetMapping("user-book/find-all")
+    public List<Book> findAllUserBook(@RequestParam(required = false) Long userId)
+    {
+        return this.userService.findAllBookByUser(userId);
+
+    }
+
+
+    @DeleteMapping("user-book/delete")
+    public void deleteUserBook(@RequestParam(required = true) Long bookId){
+        this.userService.deleteUserBook(bookId);
+
+    }
+
 }
 
 
