@@ -14,19 +14,18 @@ import java.util.List;
 @RestController
 public class BooksController {
 
-    private final BooksService booksService;
+    @Autowired
+    private BooksService booksService;
 
-    public BooksController(BooksService booksService) {
-        this.booksService = booksService;
-    }
 
-    @GetMapping("/")
+
+    @GetMapping("/book/all")
     public List<Book> getAllBooks(){
         return this.booksService.getAllBooks();
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/book/add")
     public Book addBook(@RequestBody Book book){
         return this.booksService.addBook(book);
     }
