@@ -51,6 +51,7 @@ public class UserService {
     public void deleteUserBook(Long bookId){
         Book book = booksRepo.findById(bookId).get();
         book.setUser(null);
+        booksRepo.save(book);
     }
 }
 

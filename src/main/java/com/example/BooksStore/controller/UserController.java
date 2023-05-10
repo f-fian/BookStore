@@ -41,7 +41,6 @@ public class UserController {
 
     }
 
-
     @DeleteMapping("user-book/delete")
     public void deleteUserBook(@RequestParam(required = true) Long bookId){
         this.userService.deleteUserBook(bookId);
