@@ -24,7 +24,9 @@ public class BooksStoreApplication {
 				"http://localhost:4200",
 				"http://localhost:4201",
 				"http://localhost:4201",
-				"http://localhost:4201"));
+				"http://localhost:4201",
+				"https://bookstore-15e57.web.app",
+				"https://bookstore-15e57.firebaseapp.com/"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
