@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class LibrarySecurityConfig {
-    private String[] WHITE_LIST = {"/book/all","/user/add"};
+    private String[] WHITE_LIST = {"/book/all","/user/add","/auth/**"};
 
 //    @Autowired
 //    private LibraryUserDetailsService libraryUserDetailsService;

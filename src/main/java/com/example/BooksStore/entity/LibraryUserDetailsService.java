@@ -1,5 +1,6 @@
-package com.example.BooksStore.config;
+package com.example.BooksStore.entity;
 
+import com.example.BooksStore.entity.LibraryUserDetails;
 import com.example.BooksStore.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

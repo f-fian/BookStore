@@ -1,4 +1,4 @@
-package com.example.BooksStore.config;
+package com.example.BooksStore.entity;
 
 import com.example.BooksStore.entity.User;
 import org.springframework.security.core.GrantedAuthority;
