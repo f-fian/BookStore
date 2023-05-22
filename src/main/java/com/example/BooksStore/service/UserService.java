@@ -6,6 +6,7 @@ import com.example.BooksStore.entity.User;
 import com.example.BooksStore.repo.BooksRepo;
 import com.example.BooksStore.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -19,10 +20,14 @@ public class UserService {
     private UserRepo userRepo;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private BooksRepo booksRepo;
 
 
     public User addUser(User newUser){
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepo.save(newUser);
     }
 
