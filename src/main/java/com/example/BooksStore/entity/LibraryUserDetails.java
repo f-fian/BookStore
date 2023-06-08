@@ -12,12 +12,18 @@ import java.util.stream.Collectors;
 
 public class LibraryUserDetails implements UserDetails {
 
-    private String username;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public LibraryUserDetails(User user) {
-        username = user.getUsername();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        email = user.getEmail();
         password = user.getPassword();
         authorities = Arrays.stream(user.getRole()
                         .split(","))
@@ -37,7 +43,7 @@ public class LibraryUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

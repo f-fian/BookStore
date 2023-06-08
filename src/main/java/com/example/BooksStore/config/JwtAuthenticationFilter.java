@@ -1,6 +1,6 @@
 package com.example.BooksStore.config;
 
-import com.example.BooksStore.repo.TokenRepository;
+import com.example.BooksStore.repo.TokenRepo;
 import com.example.BooksStore.service.JwtService;
 import com.example.BooksStore.service.LibraryUserDetailsService;
 import jakarta.servlet.FilterChain;
@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final LibraryUserDetailsService userDetailsService;
     private final JwtService jwtService;
-    private final TokenRepository tokenRepository;
+    private final TokenRepo tokenRepo;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -41,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            var isTokenValid = tokenRepository.findByToken(jwt)
+            var isTokenValid = tokenRepo.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
             if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {

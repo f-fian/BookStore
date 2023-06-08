@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,10 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class LibrarySecurityConfig {
-    private String[] WHITE_LIST = {"book/**","/user/add","/auth/**"};
+    private String[] WHITE_LIST = {
+            "book/**","/user/add",
+            "/auth/**","/user-book/**",
+            "register","authenticate","error"};
 
-
-
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthFilter;
@@ -43,9 +47,16 @@ public class LibrarySecurityConfig {
                 .build();
         //                .authenticationProvider(authenticationProvider)
     }
+
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Autowired
+    void registerProvider(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(customAuthenticationProvider);
     }
 
 

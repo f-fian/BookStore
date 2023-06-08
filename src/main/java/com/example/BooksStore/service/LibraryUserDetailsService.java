@@ -1,6 +1,8 @@
 package com.example.BooksStore.service;
 
 import com.example.BooksStore.entity.LibraryUserDetails;
+import com.example.BooksStore.exeption.EmailAlreadyExistExeption;
+import com.example.BooksStore.exeption.EmailOrPasswordWrongExeption;
 import com.example.BooksStore.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +16,10 @@ public class LibraryUserDetailsService implements UserDetailsService {
     private UserRepo userRepo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username)
+        System.out.println("LOAD");
+        System.out.println(username);
+        return userRepo.findByEmail(username)
                 .map(LibraryUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found"));
+                .orElseThrow(() -> new EmailOrPasswordWrongExeption("Your email or password is wrong"));
     }
 }

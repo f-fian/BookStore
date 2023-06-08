@@ -1,8 +1,10 @@
 package com.example.BooksStore.controller;
 
+import com.example.BooksStore.dto.AuthenticationResponse;
 import com.example.BooksStore.dto.LoginUserDto;
 import com.example.BooksStore.entity.User;
 import com.example.BooksStore.repo.UserRepo;
+import com.example.BooksStore.service.AuthService;
 import com.example.BooksStore.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("auth")
 public class authController {
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private JwtService jwtService;
@@ -23,25 +27,18 @@ public class authController {
     @Autowired
     private UserRepo userRepo;
 
-    @PostMapping
-    public String authenticate(
-            @RequestBody LoginUserDto loginUserDto
-    )
+    @PostMapping("authenticate")
+    public AuthenticationResponse authenticate(
+            @RequestBody LoginUserDto loginUserDto)
     {
-        System.out.println("authenticate");
+        System.out.println("sini");
+        return authService.authentication(loginUserDto);
+//        return jwtService.generateToken(user);
 
-         Authentication authentication =  authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUserDto.username(),
-                        loginUserDto.password()
-                )
-         );
-        if(authentication.isAuthenticated()) {
-            System.out.println("authenticated mas bro!!");
-        }
+    }
 
-        var user = userRepo.findByUsername(loginUserDto.username()).orElseThrow();
-
-        return jwtService.generateToken(user);
+    @PostMapping("register")
+    public AuthenticationResponse addUser(@RequestBody User user){
+        return this.authService.addUser(user);
     }
 }

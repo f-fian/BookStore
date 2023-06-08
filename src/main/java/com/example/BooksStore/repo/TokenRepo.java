@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface TokenRepository extends JpaRepository<Token, Integer> {
+public interface TokenRepo extends JpaRepository<Token, Integer> {
 
   @Query(value = """
       select t from Token t inner join User u\s
