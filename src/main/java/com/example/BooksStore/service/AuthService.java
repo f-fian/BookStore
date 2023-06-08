@@ -21,16 +21,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
     private final AuthenticationManager authenticationManager;
-
     private final UserRepo userRepo;
     private final JwtService jwtService;
     private final TokenRepo tokenRepo;
     private final PasswordEncoder passwordEncoder;
     public AuthenticationResponse addUser(User user) {
-
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         try{
@@ -39,34 +35,36 @@ public class AuthService {
             throw new EmailAlreadyExistExeption("Your email already in use");
         }
 
-        String jwt = jwtService.generateToken(user);
-        Token token = new Token(jwt, TokenType.BEARER,false,false,user);
-        tokenRepo.save(token);
+        String jwt = generateAndSaveToken(user);
         return new AuthenticationResponse(jwt);
+
     }
 
     public AuthenticationResponse authentication(LoginUserDto loginUserDto) {
-        System.out.println("sini2");
-        System.out.println(loginUserDto.email());
-        System.out.println(loginUserDto.password());
-        Authentication authentication =  authenticationManager.authenticate(
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginUserDto.email(),
                         loginUserDto.password()
                 )
         );
-        System.out.println("sini3");
-        if(!(authentication.isAuthenticated())) {
-            System.out.println("sini4");
-            throw new EmailAlreadyExistExeption("please check your email or password");
-
-        }
-        System.out.println("sini5");
+        // kalo ke sini berarti udah di authenticate, soalnya kalo ngak berhasil ke throw di atas
         User user = userRepo.findByEmail(loginUserDto.email()).orElseThrow();
+        revokeAllUserToken(user.getId());
+        String jwt = generateAndSaveToken(user);
+        return new AuthenticationResponse(jwt);
+    }
 
+    public void revokeAllUserToken(Long id){
+        tokenRepo.findAllValidTokenByUser(id).forEach(data->{
+            data.setExpired(true);
+            data.setRevoked(true);
+        });
+    }
+
+    public String generateAndSaveToken(User user){
         String jwt = jwtService.generateToken(user);
         Token token = new Token(jwt, TokenType.BEARER,false,false,user);
         tokenRepo.save(token);
-        return new AuthenticationResponse(jwt);
+        return jwt;
     }
 }

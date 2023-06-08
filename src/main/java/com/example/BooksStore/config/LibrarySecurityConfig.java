@@ -1,6 +1,7 @@
 package com.example.BooksStore.config;
 
 import com.example.BooksStore.config.JwtAuthenticationFilter;
+import com.example.BooksStore.service.LogoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class LibrarySecurityConfig {
+
+    @Autowired
+    private LogoutService logoutService;
     private String[] WHITE_LIST = {
             "book/**","/user/add",
             "/auth/**","/user-book/**",
-            "register","authenticate","error"};
+            "register","authenticate","error","/logout"};
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
@@ -43,6 +47,11 @@ public class LibrarySecurityConfig {
                 .and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .addLogoutHandler(logoutService)
+                .logoutSuccessHandler(((request, response, authentication) -> System.out.println("LOGOUT SUCCESS")))
                 .and()
                 .build();
         //                .authenticationProvider(authenticationProvider)
