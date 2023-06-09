@@ -19,14 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class LibrarySecurityConfig {
-
     @Autowired
     private LogoutService logoutService;
     private String[] WHITE_LIST = {
             "book/**","/user/add",
             "/auth/**","/user-book/**",
             "register","authenticate","error","/logout"};
-
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
@@ -54,7 +52,6 @@ public class LibrarySecurityConfig {
                 .logoutSuccessHandler(((request, response, authentication) -> System.out.println("LOGOUT SUCCESS")))
                 .and()
                 .build();
-        //                .authenticationProvider(authenticationProvider)
     }
 
 

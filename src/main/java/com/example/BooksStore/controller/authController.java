@@ -6,6 +6,7 @@ import com.example.BooksStore.entity.User;
 import com.example.BooksStore.repo.UserRepo;
 import com.example.BooksStore.service.AuthService;
 import com.example.BooksStore.service.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +39,7 @@ public class authController {
     }
 
     @PostMapping("register")
-    public AuthenticationResponse addUser(@RequestBody User user){
+    public AuthenticationResponse addUser(@Valid @RequestBody User user){
         return this.authService.addUser(user);
     }
 }

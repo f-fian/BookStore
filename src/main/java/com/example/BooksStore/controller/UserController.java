@@ -21,13 +21,7 @@ public class UserController {
     public List<User> getAllUser(){
         return this.userService.getAllUser();
     }
-
-    @PostMapping("user/add")
-    public User addUser(@RequestBody User user){
-        return this.userService.addUser(user);
-    }
-
-
+    
 
     @PostMapping("user-book/add")
     public void addUserBook(@RequestBody UserBookDto userBook){

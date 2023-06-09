@@ -18,22 +18,24 @@ public class LibraryUserDetails implements UserDetails {
 
     private String email;
     private String password;
-    private List<GrantedAuthority> authorities;
+    private Boolean authorities;
 
     public LibraryUserDetails(User user) {
         firstName = user.getFirstName();
         lastName = user.getLastName();
         email = user.getEmail();
         password = user.getPassword();
-        authorities = Arrays.stream(user.getRole()
-                        .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        authorities = user.getIsAdmin();
+
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        if(this.authorities){
+            return Arrays.stream(new String[]{"ADMIN"}).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        }else{
+            return Arrays.stream(new String[]{"USER"}).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        }
     }
 
     @Override

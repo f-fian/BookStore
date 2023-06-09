@@ -36,7 +36,7 @@ public class AuthService {
         }
 
         String jwt = generateAndSaveToken(user);
-        return new AuthenticationResponse(jwt);
+        return new AuthenticationResponse(jwt, user.getId());
 
     }
 
@@ -51,7 +51,7 @@ public class AuthService {
         User user = userRepo.findByEmail(loginUserDto.email()).orElseThrow();
         revokeAllUserToken(user.getId());
         String jwt = generateAndSaveToken(user);
-        return new AuthenticationResponse(jwt);
+        return new AuthenticationResponse(jwt,user.getId());
     }
 
     public void revokeAllUserToken(Long id){
