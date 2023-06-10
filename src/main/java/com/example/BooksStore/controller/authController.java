@@ -34,12 +34,24 @@ public class authController {
     {
         System.out.println("sini");
         return authService.authentication(loginUserDto);
-//        return jwtService.generateToken(user);
-
     }
 
     @PostMapping("register")
     public AuthenticationResponse addUser(@Valid @RequestBody User user){
         return this.authService.addUser(user);
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
