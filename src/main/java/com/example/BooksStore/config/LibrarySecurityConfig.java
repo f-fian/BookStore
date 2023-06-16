@@ -42,7 +42,7 @@ public class LibrarySecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(WHITE_LIST).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic()
