@@ -22,9 +22,10 @@ public class LibrarySecurityConfig {
     @Autowired
     private LogoutService logoutService;
     private String[] WHITE_LIST = {
-            "book/**","/user/add",
+            "book/**",
             "/auth/**","/user-book/**",
-            "register","authenticate","error","/logout"};
+            "register",
+            "authenticate","error","/logout"};
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
