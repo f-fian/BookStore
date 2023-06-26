@@ -18,7 +18,7 @@ public class Book {
     private String category;
     private Integer publishedYear;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
             name = "user_id",
             referencedColumnName = "id"

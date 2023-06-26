@@ -41,6 +41,7 @@ public class LibrarySecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
+                .requestMatchers("/book/add").hasAuthority("ADMIN")
                 .requestMatchers(WHITE_LIST).permitAll()
                 .anyRequest().permitAll()
                 .and()

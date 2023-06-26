@@ -27,9 +27,7 @@ public class BooksService {
     }
 
 
-
-
-
-
-
+    public void deleteBook(Long bookId) {
+        booksRepo.deleteById(bookId);
+    }
 }

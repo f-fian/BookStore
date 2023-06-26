@@ -36,7 +36,7 @@ public class AuthService {
         }
 
         String jwt = generateAndSaveToken(user);
-        return new AuthenticationResponse(jwt, user.getId());
+        return new AuthenticationResponse(jwt,user.getFirstName(),user.getId(),user.getIsAdmin());
 
     }
 
@@ -51,8 +51,9 @@ public class AuthService {
         User user = userRepo.findByEmail(loginUserDto.email()).orElseThrow();
         revokeAllUserToken(user.getId());
         String jwt = generateAndSaveToken(user);
-        return new AuthenticationResponse(jwt,user.getId());
+        return new AuthenticationResponse(jwt,user.getFirstName(),user.getId(),user.getIsAdmin());
     }
+
 
     public void revokeAllUserToken(Long id){
         tokenRepo.findAllValidTokenByUser(id).forEach(data->{
